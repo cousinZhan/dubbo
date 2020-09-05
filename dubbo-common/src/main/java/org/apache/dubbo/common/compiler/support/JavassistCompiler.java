@@ -38,6 +38,14 @@ public class JavassistCompiler extends AbstractCompiler {
 
     private static final Pattern FIELD_PATTERN = Pattern.compile("[^\n]+=[^\n]+;");
 
+    /**
+     * 因为动态代理类是 dubbo生成的，并不存在编译后的.class字节码文件
+     * 因此需要手动生成
+     * @param name 动态代理类的 类名
+     * @param source 动态代理类的全部代码内容
+     * @return
+     * @throws Throwable
+     */
     @Override
     public Class<?> doCompile(String name, String source) throws Throwable {
         CtClassBuilder builder = new CtClassBuilder();

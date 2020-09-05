@@ -365,6 +365,8 @@ public class RegistryProtocol implements Protocol {
 
     protected URL getRegistryUrl(URL url) {
         return URLBuilder.from(url)
+                //变更URL的protocol属性，从URL的参数中，获取registry参数值，这个值是根据registry标签来的，
+                // 比如<dubbo:registry address="zookeeper://127.0.0.1:2181"/>，那么参数值就是zookeeper
                 .setProtocol(url.getParameter(REGISTRY_KEY, DEFAULT_REGISTRY))
                 .removeParameter(REGISTRY_KEY)
                 .build();
@@ -435,6 +437,7 @@ public class RegistryProtocol implements Protocol {
     @Override
     @SuppressWarnings("unchecked")
     public <T> Invoker<T> refer(Class<T> type, URL url) throws RpcException {
+        //这里将registry开头的URL替换为对应的注册中心URL
         url = getRegistryUrl(url);
         Registry registry = registryFactory.getRegistry(url);
         if (RegistryService.class.equals(type)) {

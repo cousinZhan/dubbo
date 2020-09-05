@@ -26,7 +26,7 @@ import org.apache.dubbo.rpc.service.GenericService;
 
 public class Application {
     public static void main(String[] args) {
-        if (isClassic(args)) {
+        if (isClassic(new String[]{"classic"})) {
             runWithRefer();
         } else {
             runWithBootstrap();
@@ -67,5 +67,8 @@ public class Application {
         DemoService service = reference.get();
         String message = service.sayHello("dubbo");
         System.out.println(message);
+        while (true) {
+
+        }
     }
 }
